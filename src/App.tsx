@@ -1,6 +1,9 @@
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Header from './components/Header';
+import Calculator from './components/Calculator';
+import Footer from './components/Footer';
+
 import { ExternalLink, DevTechnology } from './types';
 
 import nodeJSLogo from './assets/node-js.svg';
@@ -10,8 +13,8 @@ import typescriptLogo from './assets/typescript.svg';
 import viteLogo from './assets/vite.svg';
 
 const myLinks: ExternalLink[] = [
-	{ name: 'LinkedIn', value: 'www.jondoe.com' },
-	{ name: 'GitHub', value: 'www.jondoe.com' },
+	{ name: 'My LinkedIn', value: 'https://www.linkedin.com/in/javier-liñán-manzanero-935194225/' },
+	{ name: 'My GitHub', value: 'https://github.com/javierlnmn' },
 ]
 
 const technologiesUsed: DevTechnology[] = [
@@ -43,7 +46,7 @@ const App: React.FC = () => {
 
 	return (
 		<>
-			<main className="font-noto-sans min-h-screen pb-5 text-gray-200 bg-stone-900">
+			<main className="font-noto-sans min-h-screen text-gray-200 bg-stone-900">
 
 				<Header
 					links={myLinks}
@@ -86,6 +89,12 @@ const App: React.FC = () => {
 					</div>
 
 				</div>
+
+				<Calculator />
+
+				<Footer
+					links={myLinks}
+				/>
 			</main>
 		</>
 	);
