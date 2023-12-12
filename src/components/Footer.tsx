@@ -4,7 +4,7 @@ interface Props {
     links: ExternalLink[];
 }
 
-const Footer: React.FC<Props> = ({ links }) => {
+const Footer = ({ links }: Props): JSX.Element => {
 
 	return (
 		<footer className='mt-5 flex items-center px-4 h-[50px] bg-stone-800 shadow-sm relative z-10'>

@@ -4,7 +4,7 @@ interface Props {
     links: ExternalLink[];
 }
 
-const Header: React.FC<Props> = ({ links }) => {
+const Header = ({ links }: Props): JSX.Element => {
 
 	return (
 		<header className='flex items-center px-4 h-[50px] bg-stone-800 shadow-sm relative z-10'>

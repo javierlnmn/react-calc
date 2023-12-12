@@ -1,7 +1,7 @@
 // import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Header from './components/Header';
-import Calculator from './components/Calculator';
+import Calculator from './components/calculator/Calculator';
 import Footer from './components/Footer';
 
 import { ExternalLink, DevTechnology } from './types';
@@ -25,7 +25,7 @@ const technologiesUsed: DevTechnology[] = [
 	{ name: 'Node JS', logo: nodeJSLogo  },
 ]
 
-const App: React.FC = () => {
+const App = (): JSX.Element => {
 
 	const operators: string[] = ['+', '-', 'x', '/'];
 	const numbers: number[] = Array.from({ length: 20 }, () => Math.floor(Math.random() * 10) + 1);
