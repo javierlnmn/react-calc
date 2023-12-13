@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import CalculatorButton from "./CalculatorButton";
 import { CalculatorButtonTheme } from "./CalculatorButtonTheme.d";
@@ -7,19 +7,19 @@ import { CalculatorButtonProps } from "./CalculatorButton";
 import { Operation } from "src/types";
 
 const Calculator = (): JSX.Element => {
-    const [currentValue, setCurrentValue] = useState<number | undefined>();
-    const [previousValue, setPreviousValue] = useState<number | undefined>();
+    const [currentValue, setCurrentValue] = useState<number>(0);
+    const [previousValue, setPreviousValue] = useState<number>(0);
     const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
     const [decimalEnabled, setDecimalEnabled] = useState<boolean>(false);
     const [decimalPlaces, setDecimalPlaces] = useState<number>(0);
 
     const updateCurrentValue = (value: number): void => {
         if (decimalEnabled) {
-            const newValue = (currentValue ?? 0) + value / Math.pow(10, decimalPlaces + 1);
+            const newValue = (currentValue) + value / Math.pow(10, decimalPlaces + 1);
             setCurrentValue(roundToDecimal(newValue, 20));
             setDecimalPlaces(decimalPlaces + 1);
         } else {
-            setCurrentValue((currentValue ?? 0) * 10 + value);
+            setCurrentValue((currentValue) * 10 + value);
         }
     }
     
@@ -40,7 +40,7 @@ const Calculator = (): JSX.Element => {
             setPreviousValue(currentOperation.perform(previousValue, currentValue));
         }
         
-        setCurrentValue(undefined);
+        setCurrentValue(0);
         setCurrentOperation(operator);
         setDecimalEnabled(false);
         setDecimalPlaces(0);
@@ -62,8 +62,8 @@ const Calculator = (): JSX.Element => {
     }
 
     const clearCalculator = (): void => {
-        setPreviousValue(undefined);
-        setCurrentValue(undefined);
+        setPreviousValue(0);
+        setCurrentValue(0);
         setCurrentOperation(undefined);
         setDecimalEnabled(false);
         setDecimalPlaces(0);
@@ -75,7 +75,7 @@ const Calculator = (): JSX.Element => {
         }
         
         setCurrentValue(currentOperation.perform(previousValue, currentValue));
-        setPreviousValue(undefined);
+        setPreviousValue(0);
         setCurrentOperation(undefined);
         setDecimalEnabled(false);
         setDecimalPlaces(0);
