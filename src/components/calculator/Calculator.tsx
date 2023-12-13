@@ -248,7 +248,7 @@ const Calculator = (): JSX.Element => {
     return (
         <div className="my-14 bg-stone-700">
             <div className="flex items-center justify-center w-11/12 max-w-md mx-auto">
-                <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-3xl sm:text-5xl lg:text-5xl">
+                <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-4xl  min-[489px]:text-5xl">
                     <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900">
                         <p className="h-full whitespace-break-spaces break-words mb-5">
                             {currentOperation? previousValue : currentValue} {currentOperation?.symbol} {currentOperation? currentValue : ''}
