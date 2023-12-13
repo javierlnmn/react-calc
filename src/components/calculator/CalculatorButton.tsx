@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface Props {
+export interface CalculatorButtonProps {
     buttonStyle: string,
     buttonLabel: string,
     handleClick: Function,
@@ -8,7 +8,7 @@ interface Props {
     colEnd: string,
 }
 
-const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, colEnd }: Props): JSX.Element => {
+const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, colEnd }: CalculatorButtonProps): JSX.Element => {
 
     const [isAnimated, setIsAnimated] = useState(false);
 
@@ -25,7 +25,7 @@ const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, col
             className={`p-3 w-full aspect-[11/14] cursor-pointer grid place-content-center ${colStart} ${colEnd} ${buttonStyle}`}
             onClick={() => {
                 handleClick();
-                handleAnimation()
+                handleAnimation();
             }}
         >
             <p className={`select-none whitespace-break-spaces break-words mb-5 text-3xl sm:text-5xl lg:text-6xl ${isAnimated ? 'animate-bounce' : ''}`}>{buttonLabel}</p>
