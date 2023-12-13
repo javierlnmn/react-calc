@@ -1,27 +1,34 @@
-import { useState, useEffect } from "react"
+import { useState } from "react";
 
 interface Props {
     buttonStyle: string,
-    buttonValue: number,
+    buttonLabel: string,
     handleClick: Function,
-    colStart: number,
-    colEnd: number,
+    colStart: string,
+    colEnd: string,
 }
 
-const CalculatorButton = ({ buttonStyle, buttonValue, handleClick, colStart, colEnd }: Props): JSX.Element => {
+const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, colEnd }: Props): JSX.Element => {
 
-    const customColumnStyles = {
-        gridColumnStart: colStart,
-        gridColumnEnd: colEnd,
-    }
+    const [isAnimated, setIsAnimated] = useState(false);
+
+    const handleAnimation = () => {
+        setIsAnimated(true);
+
+        setTimeout(() => {
+            setIsAnimated(false);
+        }, 200);
+    };
 
     return (
         <div 
-            className={'p-3 min-h-[200px] bg-stone-50 text-7xl grid place-content-center'}
-            style={customColumnStyles}
-            onClick={() => handleClick()}
+            className={`p-3 w-full aspect-[11/14] cursor-pointer grid place-content-center ${colStart} ${colEnd} ${buttonStyle}`}
+            onClick={() => {
+                handleClick();
+                handleAnimation()
+            }}
         >
-            <p className="whitespace-break-spaces break-words h-full mb-5 text-stone-800">{buttonValue}</p>
+            <p className={`select-none whitespace-break-spaces break-words mb-5 text-3xl sm:text-5xl lg:text-6xl ${isAnimated ? 'animate-bounce' : ''}`}>{buttonLabel}</p>
         </div>
     );
 };

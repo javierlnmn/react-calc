@@ -11,3 +11,19 @@
     background-clip: text;
     color: transparent;
 }
+
+@keyframes bounce {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-bounce {
+    animation: bounce .2s infinite;
+}
