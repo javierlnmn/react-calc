@@ -17,7 +17,7 @@ const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, col
 
         setTimeout(() => {
             setIsAnimated(false);
-        }, 200);
+        }, 1000);
     };
 
     return (

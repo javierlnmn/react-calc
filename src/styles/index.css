@@ -25,5 +25,5 @@
 }
 
 .animate-bounce {
-    animation: bounce .2s infinite;
+    animation: bounce .2s linear;
 }
