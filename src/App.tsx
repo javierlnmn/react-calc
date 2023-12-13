@@ -75,7 +75,7 @@ const App = (): JSX.Element => {
 
 				<div className='mt-12 max-w-[1380px] w-11/12 mx-auto'>
 
-					<h3 className='text-5xl font-black text-left my-12'>Technologies used:</h3>
+					<h3 className='text-5xl font-black text-left my-12'>Technology Stack:</h3>
 
 					<div className='flex flex-wrap justify-between gap-3'>
 

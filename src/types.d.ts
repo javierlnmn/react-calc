@@ -8,3 +8,9 @@ export interface DevTechnology {
     description?: string,
     logo?: string,
 }
+
+export interface Operation {
+    symbol: string;
+    name: string;
+    perform: (a: number, b: number) => number;
+};

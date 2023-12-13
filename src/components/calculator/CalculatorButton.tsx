@@ -22,7 +22,7 @@ const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, col
 
     return (
         <div 
-            className={`p-3 w-full aspect-[11/14] cursor-pointer grid place-content-center ${colStart} ${colEnd} ${buttonStyle}`}
+            className={`p-5 w-full cursor-pointer grid place-content-center ${colStart} ${colEnd} ${buttonStyle}`}
             onClick={() => {
                 handleClick();
                 handleAnimation();
