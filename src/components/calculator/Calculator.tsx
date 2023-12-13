@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CalculatorButton from "./CalculatorButton";
 import { CalculatorButtonTheme } from "./CalculatorButtonTheme.d";
@@ -9,36 +9,76 @@ import { Operation } from "src/types";
 const Calculator = (): JSX.Element => {
     const [currentValue, setCurrentValue] = useState<number | undefined>();
     const [previousValue, setPreviousValue] = useState<number | undefined>();
-    const [performingCalculation, setPerformingCalculation] = useState<Operation | undefined>();
+    const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
+    const [decimalEnabled, setDecimalEnabled] = useState<boolean>(false);
+    const [decimalPlaces, setDecimalPlaces] = useState<number>(0);
 
     const updateCurrentValue = (value: number): void => {
-        setCurrentValue((currentValue ?? 0) * 10 + value);
-    };
+        if (decimalEnabled) {
+            const newValue = (currentValue ?? 0) + value / Math.pow(10, decimalPlaces + 1);
+            setCurrentValue(roundToDecimal(newValue, 20));
+            setDecimalPlaces(decimalPlaces + 1);
+        } else {
+            setCurrentValue((currentValue ?? 0) * 10 + value);
+        }
+    }
+    
+    const roundToDecimal = (value: number, decimalPlaces: number): number => {
+        const factor = 10 ** decimalPlaces;
+        return Math.round(value * factor) / factor;
+    }
 
-    const performCalculation = (operator: Operation): void => {
-        setPreviousValue(currentValue);
+    const performCalculation =  (operator: Operation): void => {
+
+        if (!currentValue) {
+            return
+        } else {
+            setPreviousValue(currentValue);
+        }
+
+        if (previousValue && currentOperation) {
+            setPreviousValue(currentOperation.perform(previousValue, currentValue));
+        }
+        
         setCurrentValue(undefined);
-        setPerformingCalculation(operator);
+        setCurrentOperation(operator);
+        setDecimalEnabled(false);
+        setDecimalPlaces(0);
+        
+    }
+
+    const isDecimal = (number: number): boolean => {
+        return (number % 1) !== 0;
     }
 
     const handleDecimal = (): void => {
+        if (decimalEnabled || !currentValue || isDecimal(currentValue)) return
+        setDecimalEnabled(true);
+    }
 
+    const turnNegative = (): void => {
+        if(!currentValue) return
+        setCurrentValue(currentValue * -1);
     }
 
     const clearCalculator = (): void => {
         setPreviousValue(undefined);
         setCurrentValue(undefined);
-        setPerformingCalculation(undefined);
+        setCurrentOperation(undefined);
+        setDecimalEnabled(false);
+        setDecimalPlaces(0);
     }
 
     const handleResult = (): void => {
-        if (!currentValue || !previousValue || !performingCalculation) {
+        if (!currentValue || !previousValue || !currentOperation) {
             return
         }
         
-        setCurrentValue(performingCalculation.perform(previousValue, currentValue));
+        setCurrentValue(currentOperation.perform(previousValue, currentValue));
         setPreviousValue(undefined);
-        setPerformingCalculation(undefined);
+        setCurrentOperation(undefined);
+        setDecimalEnabled(false);
+        setDecimalPlaces(0);
     }
 
     const operations: Record<string, Operation> = {
@@ -155,10 +195,17 @@ const Calculator = (): JSX.Element => {
             colEnd: "col-end-5",
         },
         {
+            buttonLabel: "+/-",
+            buttonStyle: CalculatorButtonTheme.Gray,
+            handleClick: () => turnNegative(),
+            colStart: "col-start-1",
+            colEnd: "col-end-2",
+        },
+        {
             buttonLabel: "0",
             buttonStyle: CalculatorButtonTheme.Gray,
             handleClick: () => updateCurrentValue(0),
-            colStart: "col-start-1",
+            colStart: "col-start-2",
             colEnd: "col-end-3",
         },
         {
@@ -201,10 +248,10 @@ const Calculator = (): JSX.Element => {
     return (
         <div className="my-14 bg-stone-700">
             <div className="flex items-center justify-center w-11/12 max-w-md mx-auto">
-                <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg">
-                    <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900 text-7xl">
+                <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-3xl sm:text-5xl lg:text-5xl">
+                    <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900">
                         <p className="h-full whitespace-break-spaces break-words mb-5">
-                            {performingCalculation? previousValue : currentValue} {performingCalculation?.symbol} {performingCalculation? currentValue : ''}
+                            {currentOperation? previousValue : currentValue} {currentOperation?.symbol} {currentOperation? currentValue : ''}
                         </p>
                     </div>
                     <div className="absolute right-[-30px] w-[30px] flex flex-col bg-stone-50 items-center justify-center gap-3 py-3 rounded-r-lg">

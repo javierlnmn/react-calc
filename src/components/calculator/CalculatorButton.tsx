@@ -28,7 +28,7 @@ const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, col
                 handleAnimation();
             }}
         >
-            <p className={`select-none whitespace-break-spaces break-words mb-5 text-3xl sm:text-5xl lg:text-6xl ${isAnimated ? 'animate-bounce' : ''}`}>{buttonLabel}</p>
+            <p className={`select-none whitespace-break-spaces break-words mb-5 ${isAnimated ? 'animate-bounce' : ''}`}>{buttonLabel}</p>
         </div>
     );
 };

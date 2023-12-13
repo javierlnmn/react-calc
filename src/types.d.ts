@@ -1,3 +1,5 @@
+import Decimal from "decimal.js";
+
 export interface ExternalLink {
     name: string,
     value: string,
