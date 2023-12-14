@@ -1,7 +1,7 @@
 import Decimal from "decimal.js";
 
-export interface ExternalLink {
-    name: string,
+export interface LinkData {
+    title: string,
     value: string,
 }
 
@@ -12,9 +12,9 @@ export interface DevTechnology {
 }
 
 export interface Operation {
-    symbol: string;
-    name: string;
-    perform: (a: number, b: number) => number;
+    symbol: string,
+    name: string,
+    perform: (a: number, b: number) => number,
 };
 
 type ColStartTailwindProperty = `col-start-${number}`;

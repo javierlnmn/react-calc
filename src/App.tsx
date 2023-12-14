@@ -7,11 +7,11 @@ import MainPage from './components/MainPage';
 import Calculator from './components/calculator/Calculator';
 import Footer from './components/Footer';
 
-import { ExternalLink } from './types';
+import { LinkData } from './types';
 
-const myLinks: ExternalLink[] = [
-	{ name: 'My LinkedIn', value: 'https://www.linkedin.com/in/javier-liñán-manzanero-935194225/' },
-	{ name: 'My GitHub', value: 'https://github.com/javierlnmn' },
+const myLinks: LinkData[] = [
+	{ title: 'My LinkedIn', value: 'https://www.linkedin.com/in/javier-liñán-manzanero-935194225/' },
+	{ title: 'My GitHub', value: 'https://github.com/javierlnmn' },
 ]
 
 const App = (): JSX.Element => {
@@ -24,6 +24,7 @@ const App = (): JSX.Element => {
 
 				<Header
 					links={myLinks}
+					location={location}
 				/>
 
 				<AnimatePresence mode='wait'>

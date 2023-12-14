@@ -7,6 +7,7 @@ import typescriptLogo from '../assets/typescript.svg';
 import viteLogo from '../assets/vite.svg';
 
 import transition from "./../transition";
+import { Link } from 'react-router-dom';
 
 const MainPage = (): JSX.Element => {
 
@@ -24,7 +25,6 @@ const MainPage = (): JSX.Element => {
 			expression += `${number} ${operator} `;
 		}
 
-        console.log(expression)
 		return expression;
 	}
 
@@ -49,7 +49,7 @@ const MainPage = (): JSX.Element => {
                         technologies.
                     </p>
 
-                    <a className='transition-all font-black lg:mt-auto cursor-pointer text-center lg:ml-auto py-4 px-5 hover:py-5 hover:px-6 border-[1px] border-stone-600 bg-stone-50 hover:border-blue-400 text-gradient bg-gradient-to-r hover:from-blue-500 hover:to-emerald-400 text-lg rounded-md'>See Calculator</a>
+                    <Link to='calculator/' className='transition-all font-black lg:mt-auto cursor-pointer text-center lg:ml-auto py-4 px-5 hover:py-5 hover:px-6 border-[1px] border-stone-600 bg-stone-50 hover:border-blue-400 text-gradient bg-gradient-to-r hover:from-blue-500 hover:to-emerald-400 text-lg rounded-md' >See Calculator</Link>
 
                 </div>
 

@@ -18,9 +18,7 @@ const Calculator = (): JSX.Element => {
         if (decimalEnabled) {
             const stringCurrentValue = currentValue.toString();
 
-            console.log(stringCurrentValue);
             let [whole, decimal] = stringCurrentValue.split('.');
-            console.log(whole, decimal);
             const newDecimal = decimal ? decimal + value.toString() : value.toString();
 
             setCurrentValue(parseFloat(`${whole}.${newDecimal}`));

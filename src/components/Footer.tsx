@@ -1,7 +1,7 @@
-import { ExternalLink } from "../types";
+import { LinkData } from "../types";
 
 interface Props {
-    links: ExternalLink[];
+    links: LinkData[];
 }
 
 const Footer = ({ links }: Props): JSX.Element => {
@@ -12,8 +12,8 @@ const Footer = ({ links }: Props): JSX.Element => {
             <div className='flex items-center w-full max-w-[1380px] mx-auto'>
                 <p className='text-xl font-[700] text-gradient bg-gradient-to-r from-blue-500 to-emerald-400'>ReactCalc</p>
                 <nav className='flex gap-4 ml-auto'>
-                    {links.map((link: ExternalLink, index: number) => (
-                        <a key={index} target="_blank" className='transition-colors hover:text-amber-500' href={link.value}>{link.name}</a>
+                    {links.map((link: LinkData, index: number) => (
+                        <a key={index} target="_blank" className='transition-colors hover:text-amber-500' href={link.value}>{link.title}</a>
                     ))}
                 </nav>
             </div>
