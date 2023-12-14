@@ -6,7 +6,7 @@ const transition = (OgComponent: any) => {
         <>
             <OgComponent />
             <motion.div
-                className='fixed z-50 top-0 left-0 bg w-full h-screen origin-bottom bg-gradient-to-br from-blue-600 to-blue-500'
+                className='fixed z-50 top-0 left-0 bg w-full h-screen origin-bottom bg-stone-950'
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: 0 }}
                 exit={{ scaleY: 1 }}
@@ -14,7 +14,7 @@ const transition = (OgComponent: any) => {
             />
 
             <motion.div
-                className='fixed z-50 top-0 left-0 w-full h-screen origin-top bg-gradient-to-br from-blue-600 to-blue-500'
+                className='fixed z-50 top-0 left-0 w-full h-screen origin-top bg-stone-950'
                 initial={{ scaleY: 1 }}
                 animate={{ scaleY: 0 }}
                 exit={{ scaleY: 0 }}
