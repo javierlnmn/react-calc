@@ -16,3 +16,6 @@ export interface Operation {
     name: string;
     perform: (a: number, b: number) => number;
 };
+
+type ColStartTailwindProperty = `col-start-${number}`;
+type ColEndTailwindProperty = `col-end-${number}`;

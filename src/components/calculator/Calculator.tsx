@@ -11,24 +11,24 @@ const Calculator = (): JSX.Element => {
     const [previousValue, setPreviousValue] = useState<number>(0);
     const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
     const [decimalEnabled, setDecimalEnabled] = useState<boolean>(false);
-    const [decimalPlaces, setDecimalPlaces] = useState<number>(0);
 
     const updateCurrentValue = (value: number): void => {
         if (decimalEnabled) {
-            const newValue = (currentValue) + value / Math.pow(10, decimalPlaces + 1);
-            setCurrentValue(roundToDecimal(newValue, 20));
-            setDecimalPlaces(decimalPlaces + 1);
+            const stringCurrentValue = currentValue.toString();
+
+            console.log(stringCurrentValue);
+            let [whole, decimal] = stringCurrentValue.split('.');
+            console.log(whole, decimal);
+            const newDecimal = decimal ? decimal + value.toString() : value.toString();
+
+            setCurrentValue(parseFloat(`${whole}.${newDecimal}`));
+
         } else {
             setCurrentValue((currentValue) * 10 + value);
         }
     }
     
-    const roundToDecimal = (value: number, decimalPlaces: number): number => {
-        const factor = 10 ** decimalPlaces;
-        return Math.round(value * factor) / factor;
-    }
-
-    const performCalculation =  (operator: Operation): void => {
+    const handleOperator =  (operator: Operation): void => {
 
         if (!currentValue) {
             return
@@ -42,8 +42,11 @@ const Calculator = (): JSX.Element => {
         
         setCurrentValue(0);
         setCurrentOperation(operator);
-        setDecimalEnabled(false);
-        setDecimalPlaces(0);
+        
+        if (!isDecimal(previousValue)) {
+            setDecimalEnabled(false);
+
+        }
         
     }
 
@@ -52,7 +55,7 @@ const Calculator = (): JSX.Element => {
     }
 
     const handleDecimal = (): void => {
-        if (decimalEnabled || !currentValue || isDecimal(currentValue)) return
+        if (decimalEnabled || isDecimal(currentValue)) return
         setDecimalEnabled(true);
     }
 
@@ -66,19 +69,20 @@ const Calculator = (): JSX.Element => {
         setCurrentValue(0);
         setCurrentOperation(undefined);
         setDecimalEnabled(false);
-        setDecimalPlaces(0);
     }
 
     const handleResult = (): void => {
-        if (!currentValue || !previousValue || !currentOperation) {
+        if (!previousValue || !currentOperation) {
             return
         }
         
         setCurrentValue(currentOperation.perform(previousValue, currentValue));
         setPreviousValue(0);
         setCurrentOperation(undefined);
-        setDecimalEnabled(false);
-        setDecimalPlaces(0);
+        if (!isDecimal(previousValue)) {
+            setDecimalEnabled(false);
+
+        }
     }
 
     const operations: Record<string, Operation> = {
@@ -93,7 +97,7 @@ const Calculator = (): JSX.Element => {
             perform: (a, b) => a - b,
         },
         multiply: {
-            symbol: '*',
+            symbol: '×',
             name: 'Multiplication',
             perform: (a, b) => a * b,
         },
@@ -134,7 +138,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: operations.add.symbol,
             buttonStyle: CalculatorButtonTheme.Light,
-            handleClick: () => performCalculation(operations.add),
+            handleClick: () => handleOperator(operations.add),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
@@ -162,7 +166,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: operations.subtract.symbol,
             buttonStyle: CalculatorButtonTheme.Light,
-            handleClick: () => performCalculation(operations.subtract),
+            handleClick: () => handleOperator(operations.subtract),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
@@ -190,7 +194,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: operations.multiply.symbol,
             buttonStyle: CalculatorButtonTheme.Light,
-            handleClick: () => performCalculation(operations.multiply),
+            handleClick: () => handleOperator(operations.multiply),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
@@ -218,7 +222,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: operations.divide.symbol,
             buttonStyle: CalculatorButtonTheme.Light,
-            handleClick: () => performCalculation(operations.divide),
+            handleClick: () => handleOperator(operations.divide),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
@@ -239,7 +243,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: operations.power.symbol,
             buttonStyle: CalculatorButtonTheme.Light,
-            handleClick: () => performCalculation(operations.power),
+            handleClick: () => handleOperator(operations.power),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
@@ -247,7 +251,7 @@ const Calculator = (): JSX.Element => {
 
     return (
         <div className="my-14 bg-stone-700">
-            <div className="flex items-center justify-center w-11/12 max-w-md mx-auto">
+            <div className="flex items-center justify-center w-5/6 max-w-md mx-auto">
                 <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-4xl  min-[489px]:text-5xl">
                     <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900">
                         <p className="h-full whitespace-break-spaces break-words mb-5">

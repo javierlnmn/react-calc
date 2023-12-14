@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { ColStartTailwindProperty, ColEndTailwindProperty } from "src/types.d";
 
 export interface CalculatorButtonProps {
     buttonStyle: string,
     buttonLabel: string,
     handleClick: Function,
-    colStart: string,
-    colEnd: string,
+    colStart: ColStartTailwindProperty,
+    colEnd: ColEndTailwindProperty,
 }
 
 const CalculatorButton = ({ buttonStyle, buttonLabel, handleClick, colStart, colEnd }: CalculatorButtonProps): JSX.Element => {
