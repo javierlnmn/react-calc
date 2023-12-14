@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { ExternalLink } from "../types";
 
 interface Props {
@@ -16,7 +18,7 @@ const Header = ({ links }: Props): JSX.Element => {
                     ))}
                 </nav>
 
-                <a className='ml-auto py-1 px-4 border-[1px] border-stone-600 hover:bg-stone-700 hover:shadow-lg hover:text-stone-100 transition-all cursor-pointer rounded-md' >See Calculator</a>
+                <Link to='calculator/' className='ml-auto py-1 px-4 border-[1px] border-stone-600 hover:bg-stone-700 hover:shadow-lg hover:text-stone-100 transition-all cursor-pointer rounded-md' >See Calculator</Link>
             </div>
             
 		</header>

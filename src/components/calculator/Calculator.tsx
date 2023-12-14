@@ -6,6 +6,8 @@ import { CalculatorButtonProps } from "./CalculatorButton";
 
 import { Operation } from "src/types";
 
+import transition from "./../../transition";
+
 const Calculator = (): JSX.Element => {
     const [currentValue, setCurrentValue] = useState<number>(0);
     const [previousValue, setPreviousValue] = useState<number>(0);
@@ -234,10 +236,17 @@ const Calculator = (): JSX.Element => {
             colEnd: "col-end-2",
         },
         {
+            buttonLabel: 'DEL',
+            buttonStyle: CalculatorButtonTheme.Orange,
+            handleClick: () => console.log('click'),
+            colStart: 'col-start-2',
+            colEnd: 'col-end-3'
+        },
+        {
             buttonLabel: "=",
             buttonStyle: CalculatorButtonTheme.Orange,
             handleClick: () => handleResult(),
-            colStart: "col-start-2",
+            colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
@@ -250,7 +259,7 @@ const Calculator = (): JSX.Element => {
     ];
 
     return (
-        <div className="my-14 bg-stone-700">
+        <div className="my-14">
             <div className="flex items-center justify-center w-5/6 max-w-md mx-auto">
                 <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-4xl  min-[489px]:text-5xl">
                     <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900">
@@ -279,4 +288,4 @@ const Calculator = (): JSX.Element => {
     );
 };
 
-export default Calculator;
+export default transition(Calculator);
