@@ -9,6 +9,7 @@ export interface DevTechnology {
     name: string,
     description?: string,
     logo?: string,
+    officialSite?: string,
 }
 
 export interface Operation {

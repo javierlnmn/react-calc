@@ -1,11 +1,9 @@
 import { useLocation, Routes, Route } from "react-router-dom";
-
-import { AnimatePresence } from "framer-motion";
   
-import Header from './components/Header';
-import MainPage from './components/MainPage';
+import Header from './components/base/Header';
+import MainPage from './components/mainpage/MainPage';
 import Calculator from './components/calculator/Calculator';
-import Footer from './components/Footer';
+import Footer from './components/base/Footer';
 
 import { LinkData } from './types';
 
@@ -27,18 +25,15 @@ const App = (): JSX.Element => {
 					location={location}
 				/>
 
-				<AnimatePresence mode='wait'>
-					<Routes location={location} key={location.pathname}>
-						<Route path='/' element={<MainPage />} />
-						<Route path='calculator' element={<Calculator />} />
-					</Routes>
-				</AnimatePresence>
+				<Routes location={location} key={location.pathname}>
+					<Route path='/' element={<MainPage />} />
+					<Route path='calculator' element={<Calculator />} />
+				</Routes>
 
 				<Footer
 					links={myLinks}
 				/>
 			</main>
-
 		</>
 	);
 }

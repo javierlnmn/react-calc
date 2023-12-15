@@ -1,4 +1,4 @@
-import { LinkData } from "../types";
+import { LinkData } from "../../types";
 
 interface Props {
     links: LinkData[];

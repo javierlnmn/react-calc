@@ -1,6 +1,6 @@
 import { Link, Location } from "react-router-dom";
 
-import { LinkData } from "../types";
+import { LinkData } from "../../types";
 import { useEffect, useState } from "react";
 
 interface Props {
