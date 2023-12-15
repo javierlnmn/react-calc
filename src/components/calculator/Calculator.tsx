@@ -81,8 +81,25 @@ const Calculator = (): JSX.Element => {
         setCurrentOperation(undefined);
         if (!isDecimal(previousValue)) {
             setDecimalEnabled(false);
-
         }
+    }
+
+    const handleDeleteDigit = (): void => {
+
+        const currentValueStringSliced = currentValue.toString().slice(0, -1);
+
+        if (!parseFloat(currentValueStringSliced) || currentValueStringSliced.length <= 0) {
+            setCurrentValue(0);
+            return;
+        }
+
+        const newCurrentValue = parseFloat(currentValueStringSliced);
+
+        if (!isDecimal(newCurrentValue)) {
+            setDecimalEnabled(false)
+        }
+
+        setCurrentValue(newCurrentValue);
     }
 
     const operations: Record<string, Operation> = {
@@ -236,7 +253,7 @@ const Calculator = (): JSX.Element => {
         {
             buttonLabel: 'DEL',
             buttonStyle: CalculatorButtonTheme.Orange,
-            handleClick: () => console.log('click'),
+            handleClick: () => handleDeleteDigit(),
             colStart: 'col-start-2',
             colEnd: 'col-end-3'
         },
