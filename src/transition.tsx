@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const transition = (OgComponent: any) => {
+const transition = (OgComponent: JSX.ElementType) => {
     
     return () => (
         <>
