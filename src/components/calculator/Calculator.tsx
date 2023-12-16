@@ -1,65 +1,15 @@
 import { useState } from "react";
 
-import CalculatorButton from "./CalculatorButton";
-import { CalculatorButtonTheme } from "./CalculatorButtonTheme.d";
-import { CalculatorButtonProps } from "./CalculatorButton";
+import CalculatorButton, { CalculatorButtonProps } from "./CalculatorButton";
 
-import { Operation } from "src/types";
+import { Operation } from "src/types.d";
 
 import transition from "./../../transition";
-import { CalculatorTheme } from "./CalculatorTheme";
+import { CalculatorTheme, calculatorThemes } from "./CalculatorTheme.d";
 
 const Calculator = (): JSX.Element => {
-
-    const themes: CalculatorTheme[] = [
-        {
-            name: 'Initial Theme',
-            screenBgTailwindProperty: 'bg-stone-900',
-            screenTextTailwindProperty: 'text-stone-50',
-            primaryButtonTheme: CalculatorButtonTheme.Gray,
-            secondaryButtonTheme: CalculatorButtonTheme.Light,
-            tertiaryButtonTheme: CalculatorButtonTheme.Blue,
-            themeButtonBgTailwindProperty: 'bg-stone-500',
-        },
-        {
-            name: 'Red Theme',
-            screenBgTailwindProperty: 'bg-red-900',
-            screenTextTailwindProperty: 'text-stone-50',
-            primaryButtonTheme: CalculatorButtonTheme.Red,
-            secondaryButtonTheme: CalculatorButtonTheme.Light,
-            tertiaryButtonTheme: CalculatorButtonTheme.DarkRed,
-            themeButtonBgTailwindProperty: 'bg-red-600',
-        },
-        {
-            name: 'Blue Theme',
-            screenBgTailwindProperty: 'bg-blue-900',
-            screenTextTailwindProperty: 'text-blue-100',
-            primaryButtonTheme: CalculatorButtonTheme.Blue,
-            secondaryButtonTheme: CalculatorButtonTheme.Yellow,
-            tertiaryButtonTheme: CalculatorButtonTheme.Light,
-            themeButtonBgTailwindProperty: 'bg-blue-600',
-        },
-        {
-            name: 'Yellow Theme',
-            screenBgTailwindProperty: 'bg-stone-900',
-            screenTextTailwindProperty: 'text-stone-50',
-            primaryButtonTheme: CalculatorButtonTheme.Gray,
-            secondaryButtonTheme: CalculatorButtonTheme.Orange,
-            tertiaryButtonTheme: CalculatorButtonTheme.Yellow,
-            themeButtonBgTailwindProperty: 'bg-orange-500',
-        },
-        {
-            name: 'Pink Theme',
-            screenBgTailwindProperty: 'bg-stone-100',
-            screenTextTailwindProperty: 'text-pink-600',
-            primaryButtonTheme: CalculatorButtonTheme.Pink,
-            secondaryButtonTheme: CalculatorButtonTheme.Rose,
-            tertiaryButtonTheme: CalculatorButtonTheme.DarkRose,
-            themeButtonBgTailwindProperty: 'bg-pink-600',
-        },
-    ];
     
-    const [theme, setTheme] = useState<CalculatorTheme>(themes[0]);
+    const [theme, setTheme] = useState<CalculatorTheme>(calculatorThemes[0]);
     const [currentValue, setCurrentValue] = useState<number>(0);
     const [previousValue, setPreviousValue] = useState<number>(0);
     const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
@@ -81,23 +31,19 @@ const Calculator = (): JSX.Element => {
     
     const handleOperator =  (operator: Operation): void => {
 
-        if (!currentValue) {
-            return
-        } else {
+        if (!previousValue) {
             setPreviousValue(currentValue);
+        } else if (!isDecimal(previousValue)) {
+            setDecimalEnabled(false);
         }
 
+
         if (previousValue && currentOperation) {
-            setPreviousValue(currentOperation.perform(previousValue, currentValue));
+            handleResult();
         }
         
         setCurrentValue(0);
         setCurrentOperation(operator);
-        
-        if (!isDecimal(previousValue)) {
-            setDecimalEnabled(false);
-
-        }
         
     }
 
@@ -130,7 +76,8 @@ const Calculator = (): JSX.Element => {
         setCurrentValue(currentOperation.perform(previousValue, currentValue));
         setPreviousValue(0);
         setCurrentOperation(undefined);
-        if (!isDecimal(previousValue)) {
+
+        if (!isDecimal(currentValue)) {
             setDecimalEnabled(false);
         }
     }
@@ -140,6 +87,7 @@ const Calculator = (): JSX.Element => {
         const currentValueStringSliced = currentValue.toString().slice(0, -1);
 
         if (!parseFloat(currentValueStringSliced) || currentValueStringSliced.length <= 0) {
+            setDecimalEnabled(false);
             setCurrentValue(0);
             return;
         }
@@ -334,7 +282,7 @@ const Calculator = (): JSX.Element => {
                         </p>
                     </div>
                     <div className="absolute right-[-30px] w-[30px] flex flex-col bg-stone-50 items-center justify-center gap-3 py-3 rounded-r-lg">
-                        {themes.map((theme, key) => (
+                        {calculatorThemes.map((theme, key) => (
                             <span
                                 key={key}
                                 className={`w-[20px] cursor-pointer aspect-square rounded-full ${theme.themeButtonBgTailwindProperty}`}
