@@ -7,8 +7,59 @@ import { CalculatorButtonProps } from "./CalculatorButton";
 import { Operation } from "src/types";
 
 import transition from "./../../transition";
+import { CalculatorTheme } from "./CalculatorTheme";
 
 const Calculator = (): JSX.Element => {
+
+    const themes: CalculatorTheme[] = [
+        {
+            name: 'Initial Theme',
+            screenBgTailwindProperty: 'bg-stone-900',
+            screenTextTailwindProperty: 'text-stone-50',
+            primaryButtonTheme: CalculatorButtonTheme.Gray,
+            secondaryButtonTheme: CalculatorButtonTheme.Light,
+            tertiaryButtonTheme: CalculatorButtonTheme.Blue,
+            themeButtonBgTailwindProperty: 'bg-stone-500',
+        },
+        {
+            name: 'Red Theme',
+            screenBgTailwindProperty: 'bg-red-900',
+            screenTextTailwindProperty: 'text-stone-50',
+            primaryButtonTheme: CalculatorButtonTheme.Red,
+            secondaryButtonTheme: CalculatorButtonTheme.Light,
+            tertiaryButtonTheme: CalculatorButtonTheme.DarkRed,
+            themeButtonBgTailwindProperty: 'bg-red-600',
+        },
+        {
+            name: 'Blue Theme',
+            screenBgTailwindProperty: 'bg-blue-900',
+            screenTextTailwindProperty: 'text-blue-100',
+            primaryButtonTheme: CalculatorButtonTheme.Blue,
+            secondaryButtonTheme: CalculatorButtonTheme.Yellow,
+            tertiaryButtonTheme: CalculatorButtonTheme.Light,
+            themeButtonBgTailwindProperty: 'bg-blue-600',
+        },
+        {
+            name: 'Yellow Theme',
+            screenBgTailwindProperty: 'bg-stone-900',
+            screenTextTailwindProperty: 'text-stone-50',
+            primaryButtonTheme: CalculatorButtonTheme.Gray,
+            secondaryButtonTheme: CalculatorButtonTheme.Orange,
+            tertiaryButtonTheme: CalculatorButtonTheme.Yellow,
+            themeButtonBgTailwindProperty: 'bg-orange-500',
+        },
+        {
+            name: 'Pink Theme',
+            screenBgTailwindProperty: 'bg-stone-100',
+            screenTextTailwindProperty: 'text-pink-600',
+            primaryButtonTheme: CalculatorButtonTheme.Pink,
+            secondaryButtonTheme: CalculatorButtonTheme.Rose,
+            tertiaryButtonTheme: CalculatorButtonTheme.DarkRose,
+            themeButtonBgTailwindProperty: 'bg-pink-600',
+        },
+    ];
+    
+    const [theme, setTheme] = useState<CalculatorTheme>(themes[0]);
     const [currentValue, setCurrentValue] = useState<number>(0);
     const [previousValue, setPreviousValue] = useState<number>(0);
     const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
@@ -20,7 +71,7 @@ const Calculator = (): JSX.Element => {
 
             let [whole, decimal] = stringCurrentValue.split('.');
             const newDecimal = decimal ? decimal + value.toString() : value.toString();
-
+            
             setCurrentValue(parseFloat(`${whole}.${newDecimal}`));
 
         } else {
@@ -116,140 +167,140 @@ const Calculator = (): JSX.Element => {
     const buttonsList: CalculatorButtonProps[] = [
         {
             buttonLabel: "7",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(7),
             colStart: "col-start-1",
             colEnd: "col-end-2",
         },
         {
             buttonLabel: "8",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(8),
             colStart: "col-start-2",
             colEnd: "col-end-3",
         },
         {
             buttonLabel: "9",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(9),
             colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
             buttonLabel: operations.add.symbol,
-            buttonStyle: CalculatorButtonTheme.Light,
+            buttonStyle: theme.secondaryButtonTheme,
             handleClick: () => handleOperator(operations.add),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
         {
             buttonLabel: "4",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(4),
             colStart: "col-start-1",
             colEnd: "col-end-2",
         },
         {
             buttonLabel: "5",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(5),
             colStart: "col-start-2",
             colEnd: "col-end-3",
         },
         {
             buttonLabel: "6",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(6),
             colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
             buttonLabel: operations.subtract.symbol,
-            buttonStyle: CalculatorButtonTheme.Light,
+            buttonStyle: theme.secondaryButtonTheme,
             handleClick: () => handleOperator(operations.subtract),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
         {
             buttonLabel: "1",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(1),
             colStart: "col-start-1",
             colEnd: "col-end-2",
         },
         {
             buttonLabel: "2",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(2),
             colStart: "col-start-2",
             colEnd: "col-end-3",
         },
         {
             buttonLabel: "3",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(3),
             colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
             buttonLabel: operations.multiply.symbol,
-            buttonStyle: CalculatorButtonTheme.Light,
+            buttonStyle: theme.secondaryButtonTheme,
             handleClick: () => handleOperator(operations.multiply),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
         {
             buttonLabel: "+/-",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => turnNegative(),
             colStart: "col-start-1",
             colEnd: "col-end-2",
         },
         {
             buttonLabel: "0",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => updateCurrentValue(0),
             colStart: "col-start-2",
             colEnd: "col-end-3",
         },
         {
             buttonLabel: ".",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => handleDecimal(),
             colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
             buttonLabel: operations.divide.symbol,
-            buttonStyle: CalculatorButtonTheme.Light,
+            buttonStyle: theme.secondaryButtonTheme,
             handleClick: () => handleOperator(operations.divide),
             colStart: "col-start-4",
             colEnd: "col-end-5",
         },
         {
             buttonLabel: "AC",
-            buttonStyle: CalculatorButtonTheme.Gray,
+            buttonStyle: theme.primaryButtonTheme,
             handleClick: () => clearCalculator(),
             colStart: "col-start-1",
             colEnd: "col-end-2",
         },
         {
             buttonLabel: 'DEL',
-            buttonStyle: CalculatorButtonTheme.Orange,
+            buttonStyle: theme.tertiaryButtonTheme,
             handleClick: () => console.log('click'),
             colStart: 'col-start-2',
             colEnd: 'col-end-3'
         },
         {
             buttonLabel: "=",
-            buttonStyle: CalculatorButtonTheme.Orange,
+            buttonStyle: theme.tertiaryButtonTheme,
             handleClick: () => handleResult(),
             colStart: "col-start-3",
             colEnd: "col-end-4",
         },
         {
             buttonLabel: operations.power.symbol,
-            buttonStyle: CalculatorButtonTheme.Light,
+            buttonStyle: theme.secondaryButtonTheme,
             handleClick: () => handleOperator(operations.power),
             colStart: "col-start-4",
             colEnd: "col-end-5",
@@ -260,15 +311,20 @@ const Calculator = (): JSX.Element => {
         <div className="my-14">
             <div className="flex items-center justify-center w-5/6 max-w-md mx-auto">
                 <div className="grid grid-cols-4 h-full w-full my-8 shadow-2xl relative rounded-l-lg text-4xl  min-[489px]:text-5xl">
-                    <div className="p-3 col-span-4 aspect-[19/9] w-full bg-stone-900">
+                    <div className={`p-3 col-span-4 aspect-[19/9] w-full ${theme.screenBgTailwindProperty} ${theme.screenTextTailwindProperty}`}>
                         <p className="h-full whitespace-break-spaces break-words mb-5">
                             {currentOperation? previousValue : currentValue} {currentOperation?.symbol} {currentOperation? currentValue : ''}
                         </p>
                     </div>
                     <div className="absolute right-[-30px] w-[30px] flex flex-col bg-stone-50 items-center justify-center gap-3 py-3 rounded-r-lg">
-                        <span className="w-[20px] cursor-pointer bg-red-500 hover:bg-red-600 aspect-square rounded-full"></span>
-                        <span className="w-[20px] cursor-pointer bg-blue-500 hover:bg-blue-600 aspect-square rounded-full"></span>
-                        <span className="w-[20px] cursor-pointer bg-yellow-500 hover:bg-yellow-600 aspect-square rounded-full"></span>
+                        {themes.map((theme, key) => (
+                            <span
+                                key={key}
+                                className={`w-[20px] cursor-pointer aspect-square rounded-full ${theme.themeButtonBgTailwindProperty}`}
+                                onClick={() => setTheme(theme)}
+                            >
+                            </span>
+                        ))}
                     </div>
                     {buttonsList.map((button, index) => (
                         <CalculatorButton
