@@ -19,8 +19,19 @@ const Calculator = (): JSX.Element => {
 
         if (currentValue === '0' && value === 0) return;
 
+       
         let insertedValue: string = value.toString();
 
+        // Edge cases
+        
+        if (currentValue === '0' && value > 0 && !decimalEnabled) {
+            setCurrentValue(value.toString());
+            return;
+        }
+
+        if (currentValue === '' && decimalEnabled) {
+            insertedValue = '0';
+        }
 
         if (decimalEnabled && !currentValue.includes('.')) {
             insertedValue = '.' + insertedValue;
