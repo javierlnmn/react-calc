@@ -10,60 +10,70 @@ import { CalculatorTheme, calculatorThemes } from "./CalculatorTheme.d";
 const Calculator = (): JSX.Element => {
     
     const [theme, setTheme] = useState<CalculatorTheme>(calculatorThemes[0]);
-    const [currentValue, setCurrentValue] = useState<number>(0);
-    const [previousValue, setPreviousValue] = useState<number>(0);
+    const [currentValue, setCurrentValue] = useState<string>('');
+    const [previousValue, setPreviousValue] = useState<string>('');
     const [currentOperation, setCurrentOperation] = useState<Operation | undefined>();
     const [decimalEnabled, setDecimalEnabled] = useState<boolean>(false);
 
     const updateCurrentValue = (value: number): void => {
-        if (decimalEnabled) {
-            const stringCurrentValue = currentValue.toString();
 
-            let [whole, decimal] = stringCurrentValue.split('.');
-            const newDecimal = decimal ? decimal + value.toString() : value.toString();
-            
-            setCurrentValue(parseFloat(`${whole}.${newDecimal}`));
+        if (currentValue === '0' && value === 0) return;
 
-        } else {
-            setCurrentValue((currentValue) * 10 + value);
+        let insertedValue: string = value.toString();
+
+
+        if (decimalEnabled && !currentValue.includes('.')) {
+            insertedValue = '.' + insertedValue;
         }
+        
+        setCurrentValue(currentValue + insertedValue);
+        
     }
     
     const handleOperator =  (operator: Operation): void => {
 
         if (!previousValue) {
             setPreviousValue(currentValue);
-        } else if (!isDecimal(previousValue)) {
-            setDecimalEnabled(false);
         }
-
 
         if (previousValue && currentOperation) {
             handleResult();
+            setCurrentOperation(operator);
+        }
+
+        if(!isStringDecimal(currentValue)) {
+            setDecimalEnabled(false);
+        } else {
+            setDecimalEnabled(true);
         }
         
-        setCurrentValue(0);
+        setCurrentValue('');
         setCurrentOperation(operator);
         
     }
 
-    const isDecimal = (number: number): boolean => {
-        return (number % 1) !== 0;
+    const isStringDecimal = (value: string): boolean => {
+        return value.includes(',');
     }
 
     const handleDecimal = (): void => {
-        if (decimalEnabled || isDecimal(currentValue)) return
+        if (decimalEnabled || isStringDecimal(currentValue)) return;
         setDecimalEnabled(true);
     }
 
     const turnNegative = (): void => {
-        if(!currentValue) return
-        setCurrentValue(currentValue * -1);
+        if (currentValue === '' || currentValue === '0') return;
+
+        if (!currentValue.includes('-')) {
+            setCurrentValue('-' + currentValue);
+        } else {
+            setCurrentValue(currentValue.replace('-', ''));
+        }   
     }
 
     const clearCalculator = (): void => {
-        setPreviousValue(0);
-        setCurrentValue(0);
+        setPreviousValue('');
+        setCurrentValue('');
         setCurrentOperation(undefined);
         setDecimalEnabled(false);
     }
@@ -73,32 +83,32 @@ const Calculator = (): JSX.Element => {
             return
         }
         
-        setCurrentValue(currentOperation.perform(previousValue, currentValue));
-        setPreviousValue(0);
+        const numericPreviousValue: number = parseFloat(previousValue);
+        const numericCurrentValue: number = parseFloat(currentValue);
+
+        const result: string = currentOperation.perform(numericPreviousValue, numericCurrentValue).toString();
+
+        setCurrentValue(result);
+        setPreviousValue('');
         setCurrentOperation(undefined);
 
-        if (!isDecimal(currentValue)) {
+        if(!isStringDecimal(currentValue)) {
             setDecimalEnabled(false);
         }
     }
 
     const handleDeleteDigit = (): void => {
 
-        const currentValueStringSliced = currentValue.toString().slice(0, -1);
+        if(!currentValue) return;
 
-        if (!parseFloat(currentValueStringSliced) || currentValueStringSliced.length <= 0) {
+        let currentValueSliced = currentValue.slice(0, -1);
+
+        if (currentValueSliced[currentValueSliced.length -1] === '.') {
+            currentValueSliced = currentValueSliced.slice(0, -1);
             setDecimalEnabled(false);
-            setCurrentValue(0);
-            return;
         }
 
-        const newCurrentValue = parseFloat(currentValueStringSliced);
-
-        if (!isDecimal(newCurrentValue)) {
-            setDecimalEnabled(false)
-        }
-
-        setCurrentValue(newCurrentValue);
+       setCurrentValue(currentValueSliced);
     }
 
     const operations: Record<string, Operation> = {
