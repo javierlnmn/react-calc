@@ -30,8 +30,11 @@ const Calculator = (): JSX.Element => {
         }
 
         if (currentValue === '' && decimalEnabled) {
-            insertedValue = '0';
+            setCurrentValue('0.');
+            return;
         }
+
+        // End of edge cases
 
         if (decimalEnabled && !currentValue.includes('.')) {
             insertedValue = '.' + insertedValue;
