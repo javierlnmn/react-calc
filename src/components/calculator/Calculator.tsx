@@ -41,21 +41,30 @@ const Calculator = (): JSX.Element => {
 
         // End of edge cases
         
-        
         setCurrentValue(currentValue + insertedValue);
         
     }
     
     const handleOperator =  (operator: Operation): void => {
 
+        // Edge cases
+
         if (!previousValue) {
             setPreviousValue(currentValue);
         }
 
         if (previousValue && currentOperation) {
-            handleResult();
+            const numericPreviousValue: number = parseFloat(previousValue);
+            const numericCurrentValue: number = parseFloat(currentValue);
+
+            const result: string = currentOperation.perform(numericPreviousValue, numericCurrentValue).toString();
+            setPreviousValue(result);
             setCurrentOperation(operator);
+            setCurrentValue('');
+            return;
         }
+
+        // End of edge cases
 
         if(!isStringDecimal(currentValue)) {
             setDecimalEnabled(false);
