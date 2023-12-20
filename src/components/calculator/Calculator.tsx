@@ -63,6 +63,7 @@ const Calculator = (): JSX.Element => {
             setPreviousValue(result);
             setCurrentOperation(operator);
             setCurrentValue('');
+            setDecimalEnabled(false);
             return;
         }
 
