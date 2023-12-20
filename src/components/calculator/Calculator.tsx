@@ -49,6 +49,8 @@ const Calculator = (): JSX.Element => {
 
         // Edge cases
 
+        if(!currentValue) return;
+
         if (!previousValue) {
             setPreviousValue(currentValue);
         }
@@ -128,7 +130,7 @@ const Calculator = (): JSX.Element => {
 
         let currentValueSliced = currentValue.slice(0, -1);
 
-        if (currentValueSliced[currentValueSliced.length -1] === '.') {
+        if (currentValueSliced[currentValueSliced.length -1] === '.' || currentValueSliced[currentValueSliced.length -1] === '-') {
             currentValueSliced = currentValueSliced.slice(0, -1);
             setDecimalEnabled(false);
         }
