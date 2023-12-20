@@ -25,20 +25,22 @@ const Calculator = (): JSX.Element => {
         // Edge cases
         
         if (currentValue === '0' && value > 0 && !decimalEnabled) {
-            setCurrentValue(value.toString());
+            setCurrentValue(insertedValue);
             return;
         }
 
         if (currentValue === '' && decimalEnabled) {
-            setCurrentValue('0.');
+            setCurrentValue('0.' + insertedValue);
+            return;
+        }
+
+        if (decimalEnabled && !currentValue.includes('.')) {
+            setCurrentValue(currentValue + '.' + insertedValue);
             return;
         }
 
         // End of edge cases
-
-        if (decimalEnabled && !currentValue.includes('.')) {
-            insertedValue = '.' + insertedValue;
-        }
+        
         
         setCurrentValue(currentValue + insertedValue);
         
